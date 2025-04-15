@@ -5,6 +5,8 @@ public record UserDto(
     string Name,
     string Username,
     string Email,
+    AddressDto Address,
     string Phone,
     string Website,
-    CompanyDto Company);
+    CompanyDto Company
+);

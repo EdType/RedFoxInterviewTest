@@ -14,6 +14,10 @@ public interface IAppDbContext
 
     DbSet<Company> Companies { get; }
 
+    DbSet<Address> Addresses { get; }
+
+    DbSet<Geo> Geos { get; }
+
     /// <inheritdoc cref="DbContext.Database" />
     DatabaseFacade Database { get; }
 

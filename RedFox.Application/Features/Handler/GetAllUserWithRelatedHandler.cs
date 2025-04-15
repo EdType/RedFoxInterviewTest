@@ -18,10 +18,13 @@ public class GetAllUserWithRelatedHandler(
 {
     public async Task<IEnumerable<UserDto>> Handle(GetAllUserWithRelatedQuery request, CancellationToken ct)
     {
-        var user = await context.Users
+        var users = await context.Users
             .Include(u => u.Company)
+            .Include(u => u.Address)
+                .ThenInclude(a => a!.Geo)
+            .AsNoTracking()
             .ToListAsync(ct);
 
-        return mapper.Map<IEnumerable<UserDto>>(user);
+        return users.Select(u => mapper.Map<UserDto>(u));
     }
 }

@@ -15,6 +15,10 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
     public DbSet<Company> Companies => Set<Company>();
 
+    public DbSet<Address> Addresses => Set<Address>();
+
+    public DbSet<Geo> Geos => Set<Geo>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

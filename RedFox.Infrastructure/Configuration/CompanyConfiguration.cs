@@ -12,7 +12,9 @@ public class CompanyConfiguration : IEntityTypeConfiguration<Company>
 {
     public void Configure(EntityTypeBuilder<Company> builder)
     {
-        builder.HasKey(c => c.UserId);
-        builder.Property(c => c.Name).IsRequired().HasMaxLength(100);
+        builder.HasKey(c => c.Id);
+        builder.Property(c => c.Name).IsRequired();
+        builder.Property(c => c.CatchPhrase).IsRequired();
+        builder.Property(c => c.Bs).IsRequired();
     }
 }

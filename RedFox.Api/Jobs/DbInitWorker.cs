@@ -45,6 +45,7 @@ public class DbInitWorker(ILogger<DbInitWorker> logger, IServiceProvider scopeFa
                     x.GetProperty("email").GetString() ?? string.Empty,
                     x.GetProperty("phone").GetString() ?? string.Empty,
                     x.GetProperty("website").GetString() ?? string.Empty,
+                    GetAddress(x.GetProperty("address")),
                     GetCompany(x.GetProperty("company"))
                 )
             ).ToList();
@@ -66,6 +67,23 @@ public class DbInitWorker(ILogger<DbInitWorker> logger, IServiceProvider scopeFa
         var catchPhrase = companyElement.GetProperty("catchPhrase").GetString() ?? string.Empty;
         var bs = companyElement.GetProperty("bs").GetString() ?? string.Empty;
         return new CompanyDto(name, catchPhrase, bs);
+    }
+
+    private static AddressDto GetAddress(JsonElement addressElement)
+    {
+        var street = addressElement.GetProperty("street").GetString() ?? string.Empty;
+        var suite = addressElement.GetProperty("suite").GetString() ?? string.Empty;
+        var city = addressElement.GetProperty("city").GetString() ?? string.Empty;
+        var zipcode = addressElement.GetProperty("zipcode").GetString() ?? string.Empty;
+        var geo = GetGeo(addressElement.GetProperty("geo"));
+        return new AddressDto(street, suite, city, zipcode, geo);
+    }
+
+    private static GeoDto GetGeo(JsonElement geoElement)
+    {
+        var lat = geoElement.GetProperty("lat").GetString() ?? string.Empty;
+        var lng = geoElement.GetProperty("lng").GetString() ?? string.Empty;
+        return new GeoDto(lat, lng);
     }
 
     private async Task<Stream> FetchUsers(CancellationToken ct)
